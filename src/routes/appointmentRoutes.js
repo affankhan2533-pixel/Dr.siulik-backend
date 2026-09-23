@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { createAppointment } = require('../controllers/appointmentController');
+const { createAppointment, getSlotAvailability } = require('../controllers/appointmentController');
 
-// Public route: Patients submit appointment preference requests
+// Public route: Check real-time slot availability for a date (?date=YYYY-MM-DD)
+router.get('/availability', getSlotAvailability);
+
+// Public route: Patients submit appointment preference requests (Max 2 per slot)
 router.post('/', createAppointment);
-
-// GET /api/appointments is intentionally disabled for patient privacy.
 
 module.exports = router;
