@@ -7,7 +7,7 @@ const getClinicInfo = async (req, res, next) => {
       success: true,
       data: {
         name: "Dr. Siulik's Dental Care",
-        doctorName: "Dr. Siulik Bandyopadhyay",
+        doctorName: "Dr. Siulik Badajena",
         title: "Chief Dental Surgeon",
         tagline: "A Healthier Smile. A More Confident You.",
         status: "Development Config Mode",
