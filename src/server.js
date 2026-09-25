@@ -30,7 +30,9 @@ app.use(
 const defaultAllowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
+  'http://localhost:3002',
   'http://127.0.0.1:3000',
+  'http://127.0.0.1:3002',
   'https://dr-siulik.vercel.app',
 ];
 
@@ -105,7 +107,7 @@ app.use('/api/clinic', clinicRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`[Server] Express Backend running on http://localhost:${PORT}`);
   console.log(`[Server] CORS enabled for Vercel (https://dr-siulik.vercel.app) & local origins`);
