@@ -13,8 +13,14 @@ const contactRoutes = require('./routes/contactRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const clinicRoutes = require('./routes/clinicRoutes');
+const adminAuthRoutes = require('./routes/adminAuthRoutes');
+const mediaRoutes = require('./routes/mediaRoutes');
+const path = require('path');
 
 const app = express();
+
+// Serve local uploads statically
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Database Connection
 connectDB();
@@ -97,6 +103,8 @@ app.get('/api', (req, res) => {
 });
 
 // API Routes
+app.use('/api/admin', adminAuthRoutes);
+app.use('/api/media', mediaRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/reviews', reviewRoutes);
