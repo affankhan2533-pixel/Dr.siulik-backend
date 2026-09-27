@@ -315,8 +315,8 @@ const DEFAULT_MEDIA_ITEMS = [
   },
   {
     section: "Achievements",
-    name: "Dr. Ashwini Bhalerao",
-    year: "2022",
+    name: "Dr. Aswini Bhalerao",
+    year: "2023",
     title: "Fundamentals of Oral Surgery Course",
     issuer: "Odisha Dental Academy",
     url: "/assets/awards/certificates/image copy 3.webp",
