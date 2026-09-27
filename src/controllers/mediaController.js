@@ -8,13 +8,27 @@ let inMemoryMedia = [...DEFAULT_MEDIA_ITEMS.map((item, idx) => ({ ...item, _id: 
 
 const isDBConnected = () => mongoose.connection.readyState === 1;
 
-// Helper to seed media if DB is empty
+// Helper to seed media if DB is empty, or ensure default items exist
 const ensureMediaSeeded = async () => {
   if (!isDBConnected()) return;
   const count = await MediaItem.countDocuments();
   if (count === 0) {
     await MediaItem.insertMany(DEFAULT_MEDIA_ITEMS);
     console.log('[Media] Initial media items seeded into MongoDB.');
+    return;
+  }
+
+  // Ensure any newly added default items in defaultData.js are inserted if not present
+  for (const item of DEFAULT_MEDIA_ITEMS) {
+    const filter = {
+      section: item.section,
+      ...(item.name ? { name: item.name } : { title: item.title }),
+    };
+    const exists = await MediaItem.exists(filter);
+    if (!exists) {
+      await MediaItem.create(item);
+      console.log(`[Media] Synced missing default item to DB: [${item.section}] ${item.name || item.title}`);
+    }
   }
 };
 

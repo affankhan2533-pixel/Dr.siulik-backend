@@ -10,13 +10,23 @@ let inMemoryServices = JSON.parse(JSON.stringify(DEFAULT_SERVICES_DATA)).map((s,
 
 const isDBConnected = () => mongoose.connection.readyState === 1;
 
-// Helper to seed services if DB is empty
+// Helper to seed services if DB is empty, or ensure default categories exist
 const ensureServicesSeeded = async () => {
   if (!isDBConnected()) return;
   const count = await ServiceCategory.countDocuments();
   if (count === 0) {
     await ServiceCategory.insertMany(DEFAULT_SERVICES_DATA);
     console.log('[Services] Initial services seeded into MongoDB.');
+    return;
+  }
+
+  // Ensure any newly added default categories are inserted if not present
+  for (const cat of DEFAULT_SERVICES_DATA) {
+    const exists = await ServiceCategory.exists({ categoryId: cat.categoryId });
+    if (!exists) {
+      await ServiceCategory.create(cat);
+      console.log(`[Services] Synced missing category to DB: ${cat.title}`);
+    }
   }
 };
 
